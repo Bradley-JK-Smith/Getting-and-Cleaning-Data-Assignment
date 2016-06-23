@@ -1,0 +1,33 @@
+Run at Thu Jun 23 13:17:04 2016 
+Version: R version 3.2.1 (2015-06-18) 
+
+Reading from UCI HAR Dataset/activity_labels.txt 
+Rows read in: 6 
+
+Reading from UCI HAR Dataset/features.txt 
+Rows read in: 561 
+
+Reading from UCI HAR Dataset/test/subject_test.txt 
+Rows read in: 2947 
+
+Reading from UCI HAR Dataset/test/y_test.txt 
+Rows read in: 2947 
+
+Reading from UCI HAR Dataset/test/x_test.txt 
+Rows read in: 2947 
+
+Reading from UCI HAR Dataset/train/subject_train.txt 
+Rows read in: 7352 
+
+Reading from UCI HAR Dataset/train/y_train.txt 
+Rows read in: 7352 
+
+Reading from UCI HAR Dataset/train/x_train.txt 
+Rows read in: 7352 
+
+Writing to tidy_data.csv 
+Rows written: 10299 
+
+Writing to tidy_summary.csv 
+Rows written: 180 
+Finished at Thu Jun 23 13:17:26 2016 
