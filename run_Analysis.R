@@ -35,24 +35,24 @@ for( type in c('test', 'train')) {
         y <- readData('y', type)
         x <- readData('x', type)
         # Bind the data together BEFORE merging (otherwise cannot control order)
-        allData <- rbind(allData, cbind(type, subject, y, x[,idf]))
+        allData <- rbind(allData, cbind(subject, y, type, x[,idf]))
 }
-colnames(allData) <- c('set_type', 'subject_id', 'activity_id', features_names)
+colnames(allData) <- c('subject_id', 'activity_id', 'set_type', features_names)
 
 # Merge the labels information
 mergeData <- merge(labels_list, allData, by='activity_id')
 
-# Re-order based on the subject, activity name and set type as these are
-# the control variables. Drop the activity id as the activity name is present
+# Put control variables (subject, activity name and set type) first and order on these
+# Drop the activity id as the activity name is present
 idx <- order(mergeData[,'subject_id'], mergeData[,'activity_name'], mergeData[,'set_type'])
-tidyData <- mergeData[idx,-1]
+tidyData <- cbind(mergeData[idx,c(3,2)], mergeData[idx,-(1:3)])
 
 # Output the tidy file
 writeData(tidyData, 'tidy_data.csv')
 
 # Calculate the second independent tidy data set with average of each variable
 # for each activity and subject combination.
-tidySummary <- ddply(tidyData, .(subject_id, activity_name), function(x) colMeans(x[,features_names]))
+tidySummary <- ddply(tidyData, .(subject_id, activity_name, set_type), function(x) colMeans(x[,features_names]))
 
 # Output the second independent tidy file
 writeData(tidySummary, 'tidy_summary.csv')

@@ -1,4 +1,4 @@
-Run at Thu Jun 23 13:43:19 2016 
+Run at Thu Jun 23 17:26:46 2016 
 Version: R version 3.2.1 (2015-06-18) 
 
 Reading from UCI HAR Dataset/activity_labels.txt 
@@ -39,5 +39,5 @@ Columns written: 69
 
 Writing to tidy_summary.csv 
 Rows written: 180 
-Columns written: 68 
-Finished at Thu Jun 23 13:43:41 2016 
+Columns written: 69 
+Finished at Thu Jun 23 17:27:08 2016 
