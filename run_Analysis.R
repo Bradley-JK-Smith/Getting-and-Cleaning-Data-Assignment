@@ -48,13 +48,13 @@ idx <- order(mergeData[,'subject_id'], mergeData[,'activity_name'], mergeData[,'
 tidyData <- cbind(mergeData[idx,c(3,2)], mergeData[idx,-(1:3)])
 
 # Output the tidy file
-writeData(tidyData, 'tidy_data.csv')
+writeData(tidyData, 'tidy_data.txt')
 
 # Calculate the second independent tidy data set with average of each variable
 # for each activity and subject combination.
 tidySummary <- ddply(tidyData, .(subject_id, activity_name, set_type), function(x) colMeans(x[,features_names]))
 
 # Output the second independent tidy file
-writeData(tidySummary, 'tidy_summary.csv')
+writeData(tidySummary, 'tidy_summary.txt')
 
 cat0('Finished at', date())
