@@ -15,5 +15,6 @@ readData <- function(type, setName='') {
         cat0('\nReading from', fileName)
         x <- read.csv(fileName, header=FALSE, sep = '', stringsAsFactors=FALSE)
         cat0('Rows read in:', nrow(x))
+        cat0('Columns read in:', ncol(x))
         return(x)
 }

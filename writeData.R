@@ -9,5 +9,6 @@
 writeData <- function(x, fileName) {
         cat0('\nWriting to', fileName)
         cat0('Rows written:', nrow(x))
+        cat0('Columns written:', ncol(x))
         write.csv(x, fileName, row.names=FALSE)
 }
