@@ -12,5 +12,8 @@ readData <- function(type, setName='') {
         } else {
                 fileName <- paste0('UCI HAR Dataset/', setName, '/', type, '_', setName, '.txt')
         }
+        cat0('\nReading from', fileName)
         x <- read.csv(fileName, header=FALSE, sep = '', stringsAsFactors=FALSE)
+        cat0('Rows read in:', nrow(x))
+        return(x)
 }

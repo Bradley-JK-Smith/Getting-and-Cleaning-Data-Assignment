@@ -1,6 +1,11 @@
 library(plyr)
 
+source('cat0.R')
 source('readData.R')
+source('writeData.R')
+
+cat0('Run at', date())
+cat0('Version:', R.version.string)
 
 # Get activity labels
 labels_list <- readData('activity_labels')
@@ -24,30 +29,32 @@ features_names <- gsub('-mean|-std', '', features_names)
 # There is no explicit 'id' column, the number of the row is the implicit
 # label so these are column bound.
 # Use the index defined earlier (idf) to filter down to required columns
-res <- NULL
+allData <- NULL
 for( type in c('test', 'train')) {
         subject <- readData('subject', type)
         y <- readData('y', type)
         x <- readData('x', type)
         # Bind the data together BEFORE merging (otherwise cannot control order)
-        res <- rbind(cbind(type, subject, y, x[,idf]))
+        allData <- rbind(allData, cbind(type, subject, y, x[,idf]))
 }
-colnames(res) <- c('set_type', 'subject_id', 'activity_id', features_names)
+colnames(allData) <- c('set_type', 'subject_id', 'activity_id', features_names)
 
 # Merge the labels information
-z <- merge(labels_list, res, by='activity_id')
+mergeData <- merge(labels_list, allData, by='activity_id')
 
 # Re-order based on the subject, activity name and set type as these are
 # the control variables. Drop the activity id as the activity name is present
-idx <- order(z[,'subject_id'], z[,'activity_name'], z[,'set_type'])
-z <- z[idx,-1]
+idx <- order(mergeData[,'subject_id'], mergeData[,'activity_name'], mergeData[,'set_type'])
+tidyData <- mergeData[idx,-1]
 
 # Output the tidy file
-write.csv(z, 'tidy_data.csv', row.names=FALSE)
+writeData(tidyData, 'tidy_data.csv')
 
 # Calculate the second independent tidy data set with average of each variable
 # for each activity and subject combination.
-zz <- ddply(z, .(subject_id, activity_name), function(x) colMeans(x[,features_names]))
+tidySummary <- ddply(tidyData, .(subject_id, activity_name), function(x) colMeans(x[,features_names]))
 
 # Output the second independent tidy file
-write.csv(zz, 'tidy_summary.csv', row.names=FALSE)
+writeData(tidySummary, 'tidy_summary.csv')
+
+cat0('Finished at', date())
